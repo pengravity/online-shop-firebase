@@ -13,10 +13,13 @@
 
   --color-purple: #9d0191;
   --color-orange: #ff7722;
+  --color-violet: rgb(137, 8, 223)
 
   --color-primary: #007bff;
   --color-success: #28a745;
   --color-danger: orangered;
+
+
 }
 
 * {
@@ -32,6 +35,7 @@ html {
 
 body {
   font-family: var(--font-family);
+  background-color: rgb(217, 181, 241);
 }
 
 section {

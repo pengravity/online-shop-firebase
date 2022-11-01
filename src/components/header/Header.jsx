@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
 import { ImCart } from 'react-icons/im';
@@ -26,6 +26,8 @@ const cart = (
     </Link>
   </span>
 );
+
+const activeLink = ({ isActive }) => (isActive ? 'active' : '');
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -55,17 +57,27 @@ const Header = () => {
               <FaTimes size={24} onClick={hideMenu} />
             </li>
             <li>
-              <Link to='/'>Home</Link>
+              <NavLink to='/' end className={activeLink}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <Link to='/contact'>Contact Us</Link>
+              <NavLink to='/contact' className={activeLink}>
+                Contact Us
+              </NavLink>
             </li>
           </ul>
           <div className='header-right' onClick={hideMenu}>
             <span className='links'>
-              <Link to='/login'>Login</Link>
-              <Link to='/register'>Register</Link>
-              <Link to='/order-history'>My Orders</Link>
+              <NavLink to='/login' className={activeLink}>
+                Login
+              </NavLink>
+              <NavLink to='/register' className={activeLink}>
+                Register
+              </NavLink>
+              <NavLink to='/order-history' className={activeLink}>
+                My Orders
+              </NavLink>
             </span>
             {cart}
           </div>
