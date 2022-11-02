@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { GrGoogle } from 'react-icons/gr';
 
 import Card from '../../components/card/Card';
 
@@ -19,12 +18,12 @@ const Register = () => {
             <button className='--btn --btn-primary --btn-block'>
               Register
             </button>
-          </form>
 
-          <span className='register'>
-            <p className='black'>Have an account?</p>&nbsp;
-            <Link to='/login'>Login</Link>
-          </span>
+            <span className='register'>
+              <p className='black'>Have an account?</p>&nbsp;
+              <Link to='/login'>Login</Link>
+            </span>
+          </form>
         </div>
       </Card>
     </section>

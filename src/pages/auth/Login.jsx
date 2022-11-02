@@ -19,15 +19,15 @@ const Login = () => {
               <Link to='/reset'>Reset Password</Link>
             </div>
             <p>-- or --</p>
-          </form>
 
-          <button className='--btn --btn-danger --btn-block'>
-            <GrGoogle /> &nbsp; Login With Google
-          </button>
-          <span className='register'>
-            <p className='black'>Don't have an account?</p>&nbsp;
-            <Link to='/register'>Register</Link>
-          </span>
+            <button className='--btn --btn-danger --btn-block'>
+              <GrGoogle /> &nbsp; Login With Google
+            </button>
+            <span className='register'>
+              <p className='black'>Don't have an account?</p>&nbsp;
+              <Link to='/register'>Register</Link>
+            </span>
+          </form>
         </div>
       </Card>
     </section>
