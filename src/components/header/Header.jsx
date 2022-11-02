@@ -1,11 +1,14 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/config';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import { toast } from 'react-toastify';
 import { ImCart } from 'react-icons/im';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { FaUserAlt } from 'react-icons/fa';
+
 import { FaTimes } from 'react-icons/fa';
 
 import './Header.scss';
@@ -34,8 +37,22 @@ const activeLink = ({ isActive }) => (isActive ? 'active' : '');
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
-
+  const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
+
+  //checking currently signed-in user
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(user.displayName);
+        setDisplayName(user.displayName);
+      } else {
+        // User is signed out
+        setDisplayName('');
+      }
+    });
+  }, []);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -88,6 +105,9 @@ const Header = () => {
               <NavLink to='/login' className={activeLink}>
                 Login
               </NavLink>
+              <a href='#'>
+                <FaUserAlt size={18} /> Hi, {displayName}
+              </a>
               <NavLink to='/register' className={activeLink}>
                 Register
               </NavLink>
