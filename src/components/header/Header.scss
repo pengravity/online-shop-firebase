@@ -77,7 +77,7 @@ nav {
       color: orangered;
     }
     &.active {
-      color: var(--color-danger);
+      color: orangered;
     }
     p {
       position: absolute;
@@ -94,7 +94,7 @@ nav {
       color: orangered;
     }
     &.active {
-      color: var(--color-danger);
+      color: orangered;
     }
   }
 }
@@ -215,7 +215,7 @@ nav {
 
 .active {
   position: relative;
-  color: var(--color-danger);
+  color: orangered;
 }
 
 .active::after {

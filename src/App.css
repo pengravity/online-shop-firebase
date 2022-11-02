@@ -17,7 +17,7 @@
 
   --color-primary: #007bff;
   --color-success: #28a745;
-  --color-danger: orangered;
+  --color-danger: rgb(113, 33, 241);
 }
 
 * {
@@ -310,7 +310,7 @@ p {
 }
 .--btn-danger {
   color: #fff;
-  background: orangered;
+  background: var(--color-danger);
 }
 
 .--btn-success {
