@@ -1,6 +1,9 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/config';
 
+import { toast } from 'react-toastify';
 import { ImCart } from 'react-icons/im';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaTimes } from 'react-icons/fa';
@@ -32,12 +35,25 @@ const activeLink = ({ isActive }) => (isActive ? 'active' : '');
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
 
+  const navigate = useNavigate();
+
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
 
   const hideMenu = () => {
     setShowMenu(false);
+  };
+
+  const logoutUser = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success('user logged out');
+        navigate('/');
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (
@@ -77,6 +93,9 @@ const Header = () => {
               </NavLink>
               <NavLink to='/order-history' className={activeLink}>
                 My Orders
+              </NavLink>
+              <NavLink to='/' onClick={logoutUser}>
+                Logout
               </NavLink>
             </span>
             {cart}
