@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase/config';
@@ -35,6 +36,19 @@ const Login = () => {
       });
   };
 
+  const provider = new GoogleAuthProvider();
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        toast.success('Sign-in successful');
+        navigate('/');
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   return (
     <>
       {isLoading && <Spinner />}
@@ -65,7 +79,11 @@ const Login = () => {
               </div>
               <p>-- or --</p>
 
-              <button type='submit' className='--btn --btn-danger --btn-block'>
+              <button
+                type='submit'
+                className='--btn --btn-danger --btn-block'
+                onClick={signInWithGoogle}
+              >
                 <GrGoogle /> &nbsp; Login With Google
               </button>
               <span className='register'>
