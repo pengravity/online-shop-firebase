@@ -30,7 +30,7 @@ const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+
         setIsLoading(false);
         toast.success('User registered!');
         navigate('/login');
@@ -72,7 +72,7 @@ const Register = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <button type='submit' className='--btn --btn-primary --btn-block'>
+              <button className='--btn --btn-primary --btn-block'>
                 Register
               </button>
 
