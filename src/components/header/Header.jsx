@@ -48,15 +48,20 @@ const Header = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // console.log(user);
         const uid = user.uid;
 
-        setDisplayName(user.displayName);
+        // email and pass register users dont have an user name so we are creating one from email
+        if (user.displayName === null) {
+          const uName = user.email.split('@')[0];
+          setDisplayName(uName);
+        } else {
+          setDisplayName(user.displayName);
+        }
 
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
-            userName: user.displayName,
+            userName: user.displayName ? user.displayName : displayName,
             userID: user.uid,
           })
         );
