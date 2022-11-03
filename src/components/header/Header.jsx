@@ -2,9 +2,11 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/config';
+import { useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
-
 import { toast } from 'react-toastify';
+
+import { SET_ACTIVE_USER } from '../../redux/slices/authSlice';
 import { ImCart } from 'react-icons/im';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaUserAlt } from 'react-icons/fa';
@@ -40,13 +42,24 @@ const Header = () => {
   const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   //checking currently signed-in user
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        // console.log(user);
         const uid = user.uid;
-        console.log(user.displayName);
+
         setDisplayName(user.displayName);
+
+        dispatch(
+          SET_ACTIVE_USER({
+            email: user.email,
+            userName: user.displayName,
+            userID: user.uid,
+          })
+        );
       } else {
         // User is signed out
         setDisplayName('');
