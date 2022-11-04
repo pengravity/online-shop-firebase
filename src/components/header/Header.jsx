@@ -6,7 +6,12 @@ import { useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-toastify';
 
-import { SET_ACTIVE_USER } from '../../redux/slices/authSlice';
+import {
+  SET_ACTIVE_USER,
+  REMOVE_ACTIVE_USER,
+} from '../../redux/slices/authSlice';
+import { ShowOnLogin, ShowOnLogout } from '../displayLinks/displayLink';
+
 import { ImCart } from 'react-icons/im';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaUserAlt } from 'react-icons/fa';
@@ -48,7 +53,7 @@ const Header = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
+        // const uid = user.uid;
 
         // email and pass register users dont have an user name so we are creating one from email
         if (user.displayName === null) {
@@ -68,9 +73,10 @@ const Header = () => {
       } else {
         // User is signed out
         setDisplayName('');
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, []);
+  }, [dispatch, displayName]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -120,21 +126,23 @@ const Header = () => {
           </ul>
           <div className='header-right' onClick={hideMenu}>
             <span className='links'>
-              <NavLink to='/login' className={activeLink}>
-                Login
-              </NavLink>
-              <a href='#'>
-                <FaUserAlt size={18} /> Hi, {displayName}
-              </a>
-              <NavLink to='/register' className={activeLink}>
-                Register
-              </NavLink>
-              <NavLink to='/order-history' className={activeLink}>
-                My Orders
-              </NavLink>
-              <NavLink to='/' onClick={logoutUser}>
-                Logout
-              </NavLink>
+              <ShowOnLogout>
+                <NavLink to='/login' className={activeLink}>
+                  Login
+                </NavLink>
+              </ShowOnLogout>
+              <ShowOnLogin>
+                <a href='#home' style={{ color: 'orange' }}>
+                  <FaUserAlt size={18} /> Hi, {displayName}
+                </a>
+                <NavLink to='/order-history' className={activeLink}>
+                  My Orders
+                </NavLink>
+
+                <NavLink to='/' onClick={logoutUser}>
+                  Logout
+                </NavLink>
+              </ShowOnLogin>
             </span>
             {cart}
           </div>
