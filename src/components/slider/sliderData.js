@@ -14,4 +14,9 @@ export const sliderData = [
     heading: 'Smartphones',
     desc: 'Up to 30% off on selected products.',
   },
+  {
+    image: 'https://i.ibb.co/mhxgbnm/gadgets.jpg',
+    heading: 'Gadgets',
+    desc: 'Up to 30% off on selected products.',
+  },
 ];
