@@ -15,16 +15,19 @@ const Slider = () => {
     setCurrentSlide(0);
   }, []);
 
-  const auto = () => {
-    slideInterval = setInterval(nextSlide, intervalTime);
-  };
+  //   const auto = () => {
+  //     slideInterval = setInterval(nextSlide, intervalTime);
+  //   };
 
   useEffect(() => {
     if (autoScroll) {
+      const auto = () => {
+        slideInterval = setInterval(nextSlide, intervalTime);
+      };
       auto();
     }
     return () => clearInterval(slideInterval);
-  }, [currentSlide]);
+  }, [currentSlide, autoScroll, slideInterval]);
 
   const prevSlide = () => {
     setCurrentSlide(
@@ -36,7 +39,6 @@ const Slider = () => {
     setCurrentSlide(
       currentSlide === sliderData.length - 1 ? 0 : currentSlide + 1
     );
-    console.log(currentSlide);
   };
 
   return (
