@@ -19,7 +19,8 @@ import { FaUserAlt } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 
 import './Header.scss';
-import AdminPanel from '../adminPanel/AdminOnly';
+import AdminOnly from '../adminPanel/AdminOnly';
+import { AdminOnlyLink } from '../adminPanel/AdminOnly';
 
 const logo = (
   <div className='logo'>
@@ -115,9 +116,11 @@ const Header = () => {
               <FaTimes size={24} onClick={hideMenu} />
             </li>
             <li>
-              <AdminPanel>
-                <button className='--btn --btn-primary'>Admin</button>
-              </AdminPanel>
+              <AdminOnlyLink>
+                <Link to='/admin/home'>
+                  <button className='--btn --btn-primary'>Admin</button>
+                </Link>
+              </AdminOnlyLink>
             </li>
 
             <li>

@@ -7,7 +7,6 @@ const Home = () => {
     <div>
       {/* <Slider /> */}
       <h1>Home</h1>
-      <AdminOnly />
     </div>
   );
 };

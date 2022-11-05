@@ -3,7 +3,7 @@ import './AdminNavbar.scss';
 const AdminNavbar = () => {
   return (
     <div>
-      <h1>Admin Navbar</h1>
+      <h1>admin Nav</h1>
     </div>
   );
 };
