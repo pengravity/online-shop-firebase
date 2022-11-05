@@ -5,8 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
 
-import { Home, Contact, Register, Login, Reset } from './pages';
+import { Home, Contact, Register, Login, Reset, Admin } from './pages';
 import { Header, Footer } from './components';
+import AdminOnly from './components/adminPanel/AdminOnly';
 
 function App() {
   return (
@@ -19,6 +20,15 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/reset' element={<Reset />} />
+
+          <Route
+            path='/admin/*'
+            element={
+              <AdminOnly>
+                <Admin />
+              </AdminOnly>
+            }
+          />
         </Routes>
         <Footer />
         <ToastContainer />

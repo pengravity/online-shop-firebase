@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectEmail } from '../../redux/slices/authSlice';
 
-const AdminPanel = ({ children }) => {
+const AdminOnly = ({ children }) => {
   const userEmail = useSelector(selectEmail);
 
   if (userEmail === process.env.REACT_APP_ADMIN_EMAIL) {
@@ -10,4 +10,4 @@ const AdminPanel = ({ children }) => {
   return null;
 };
 
-export default AdminPanel;
+export default AdminOnly;

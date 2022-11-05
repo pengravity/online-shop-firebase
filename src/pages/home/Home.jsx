@@ -1,4 +1,4 @@
-import AdminPanel from '../../components/adminPanel/AdminPanel';
+import AdminOnly from '../../components/adminPanel/AdminOnly';
 import Slider from '../../components/slider/Slider';
 import './Home.scss';
 
@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       {/* <Slider /> */}
       <h1>Home</h1>
-      <AdminPanel />
+      <AdminOnly />
     </div>
   );
 };

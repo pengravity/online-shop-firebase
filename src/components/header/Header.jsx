@@ -19,7 +19,7 @@ import { FaUserAlt } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 
 import './Header.scss';
-import AdminPanel from '../adminPanel/AdminPanel';
+import AdminPanel from '../adminPanel/AdminOnly';
 
 const logo = (
   <div className='logo'>
