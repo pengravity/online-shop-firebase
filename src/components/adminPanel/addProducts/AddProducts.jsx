@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import Card from '../../card/Card';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
+import { storage } from '../../../firebase/config';
+import Card from '../../card/Card';
 import styles from './AddProducts.module.scss';
 
 const categories = [
@@ -14,21 +16,36 @@ const AddProducts = () => {
   const [product, setProduct] = useState({
     name: '',
     imageURL: '',
-    price: null,
+    price: 0,
     category: '',
     brand: '',
     desc: '',
   });
 
-  const handleInputChange = () => {};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
 
-  const handleImageChange = () => {};
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    const storageRef = ref(storage, `images/${Date.now()}_${file.name}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+  };
+
+  const addProduct = (e) => {
+    e.preventDefault();
+
+    console.log(product);
+  };
 
   return (
     <div className={styles.product}>
       <h1>Add Products</h1>
       <Card cardClass={styles.card}>
-        <form>
+        <form onSubmit={addProduct}>
           <label>Product name:</label>
           <input
             type='text'
@@ -41,7 +58,7 @@ const AddProducts = () => {
           <label>Product image:</label>
           <Card cardClass={styles.group}>
             <div className={styles.progress}>
-              <div className={styles['progres-bar']} style={{ width: '50%' }}>
+              <div className={styles['progress-bar']} style={{ width: '50%' }}>
                 Uploading 50%
               </div>
             </div>
@@ -55,6 +72,7 @@ const AddProducts = () => {
             <input
               type='text'
               required
+              placeholder='Image URL'
               name='imageURL'
               disabled
               value={product.imageURL}
