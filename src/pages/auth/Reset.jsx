@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import Card from '../../components/card/Card';
 import Spinner from '../../components/spinner/Spinner';
 
-import './auth.scss';
+import styles from './auth.module.scss';
 
 const Reset = () => {
   const [email, setEmail] = useState('');
@@ -31,9 +31,9 @@ const Reset = () => {
   return (
     <>
       {isLoading && <Spinner />}
-      <section className='container auth'>
+      <section className={`container ${styles.auth}`}>
         <Card>
-          <div className='form'>
+          <div className={styles.form}>
             <h2>Reset Password</h2>
 
             <form onSubmit={resetPassword}>
@@ -49,7 +49,7 @@ const Reset = () => {
                 Reset Password
               </button>
 
-              <span className='links'>
+              <span className={styles.links}>
                 <p>
                   <Link to='/login'>Login</Link>
                 </p>

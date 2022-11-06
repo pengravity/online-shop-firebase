@@ -8,7 +8,7 @@ import { auth } from '../../firebase/config';
 import Card from '../../components/card/Card';
 import Spinner from '../../components/spinner/Spinner';
 
-import './auth.scss';
+import styles from './auth.module.scss';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -45,9 +45,9 @@ const Register = () => {
   return (
     <>
       {isLoading && <Spinner />}
-      <section className='container auth'>
+      <section className={`container ${styles.auth}`}>
         <Card>
-          <div className='form'>
+          <div className={styles.form}>
             <h2>Register</h2>
 
             <form onSubmit={registerUser}>
@@ -76,8 +76,8 @@ const Register = () => {
                 Register
               </button>
 
-              <span className='register'>
-                <p className='black'>Have an account?</p>&nbsp;
+              <span className={styles.register}>
+                <p className={styles.black}>Have an account?</p>&nbsp;
                 <Link to='/login'>Login</Link>
               </span>
             </form>

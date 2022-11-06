@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { auth } from '../../firebase/config';
 import { GrGoogle } from 'react-icons/gr';
 import Card from '../../components/card/Card';
-import './auth.scss';
+import styles from './auth.module.scss';
 import Spinner from '../../components/spinner/Spinner';
 
 const Login = () => {
@@ -53,9 +53,9 @@ const Login = () => {
     <>
       {isLoading && <Spinner />}
 
-      <section className='container auth'>
+      <section className={`container ${styles.auth}`}>
         <Card>
-          <div className='form'>
+          <div className={styles.form}>
             <h2>Login</h2>
 
             <form onSubmit={loginUser}>
@@ -74,7 +74,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button className='--btn --btn-primary --btn-block'>Login</button>
-              <div className='links'>
+              <div className={styles.links}>
                 <Link to='/reset'>Reset Password</Link>
               </div>
               <p>-- or --</p>
@@ -86,7 +86,7 @@ const Login = () => {
               >
                 <GrGoogle /> &nbsp; Login With Google
               </button>
-              <span className='register'>
+              <span className={styles.register}>
                 <p className='black'>Don't have an account?</p>&nbsp;
                 <Link to='/register'>Register</Link>
               </span>

@@ -18,12 +18,12 @@ import { FaUserAlt } from 'react-icons/fa';
 
 import { FaTimes } from 'react-icons/fa';
 
-import './Header.scss';
+import styles from './Header.module.scss';
 import AdminOnly from '../adminPanel/AdminOnly';
 import { AdminOnlyLink } from '../adminPanel/AdminOnly';
 
 const logo = (
-  <div className='logo'>
+  <div className={styles.logo}>
     <Link to='/'>
       <h3>
         <span>Online Shop</span>
@@ -33,7 +33,7 @@ const logo = (
 );
 
 const cart = (
-  <span className='cart'>
+  <span className={styles.cart}>
     <Link to='/cart'>
       Cart
       <ImCart size={22} />
@@ -101,17 +101,23 @@ const Header = () => {
 
   return (
     <header>
-      <div className='header'>
+      <div className={styles.header}>
         {logo}
-        <nav className={showMenu ? 'show-nav' : 'hide-nav'}>
+        <nav
+          className={
+            showMenu ? `${styles['show-nav']}` : `${styles['hide-nav']}`
+          }
+        >
           <div
             className={
-              showMenu ? 'nav-wrapper show-nav-wrapper' : 'nav-wrapper'
+              showMenu
+                ? `${styles['nav-wrapper']} ${styles['show-nav-wrapper']}`
+                : `${styles['nav-wrapper']}`
             }
             onClick={hideMenu}
           ></div>
           <ul onClick={hideMenu}>
-            <li className='logo-mobile'>
+            <li className={styles['logo-mobile']}>
               {logo}
               <FaTimes size={24} onClick={hideMenu} />
             </li>
@@ -134,8 +140,8 @@ const Header = () => {
               </NavLink>
             </li>
           </ul>
-          <div className='header-right' onClick={hideMenu}>
-            <span className='links'>
+          <div className={styles['header-right']} onClick={hideMenu}>
+            <span className={styles.links}>
               <ShowOnLogout>
                 <NavLink to='/login' className={activeLink}>
                   Login
@@ -149,7 +155,7 @@ const Header = () => {
                   My Orders
                 </NavLink>
 
-                <NavLink to='/' onClick={logoutUser}>
+                <NavLink to='/' onClick={logoutUser} end>
                   Logout
                 </NavLink>
               </ShowOnLogin>
@@ -157,7 +163,7 @@ const Header = () => {
             {cart}
           </div>
         </nav>
-        <div className='menu-icon'>
+        <div className={styles['menu-icon']}>
           {cart}
           <GiHamburgerMenu size={30} onClick={toggleMenu} />
         </div>
