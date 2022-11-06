@@ -16,10 +16,13 @@
   }
 
   nav ul {
+    display: flex;
+    flex-direction: column;
     li {
       border-bottom: 1px solid #ccc;
       padding: 1rem;
       position: relative;
+
       a {
         display: block;
         width: 100%;
@@ -32,12 +35,12 @@
   cursor: pointer;
 }
 
-.active::before {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background-color: orangered;
-}
+// .active::before {
+//   content: '';
+//   position: absolute;
+//   right: 0;
+//   top: 0;
+//   width: 4px;
+//   height: 100%;
+//   background-color: orangered;
+// }

@@ -13,7 +13,8 @@ const AdminNavbar = () => {
   return (
     <div className={styles.navbar}>
       <div className={styles.user}>
-        <FaUserAlt size={40} color='#fff' /> <h4> {userName}</h4>
+        <FaUserAlt size={40} color='#fff' />
+        <h4> {userName}</h4>
       </div>
       <nav>
         <ul>
