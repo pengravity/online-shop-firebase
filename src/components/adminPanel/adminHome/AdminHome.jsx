@@ -1,5 +1,6 @@
-import './AdminHome.scss';
-import AdminOnly from './AdminOnly';
+import styles from './AdminHome.module.scss';
+
+import AdminOnly from '../AdminOnly';
 
 const AdminHome = () => {
   return (

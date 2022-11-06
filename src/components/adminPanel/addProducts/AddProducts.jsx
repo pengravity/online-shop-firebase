@@ -1,4 +1,4 @@
-import './AddProducts.scss';
+import styles from './AddProducts.module.scss';
 
 const AddProducts = () => {
   return (

@@ -42,7 +42,7 @@ const cart = (
   </span>
 );
 
-const activeLink = ({ isActive }) => (isActive ? 'active' : '');
+const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : '');
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);

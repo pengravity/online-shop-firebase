@@ -1,4 +1,4 @@
-import './ViewProducts.scss';
+import styles from './ViewProducts.module.scss';
 
 const ViewProducts = () => {
   return (
