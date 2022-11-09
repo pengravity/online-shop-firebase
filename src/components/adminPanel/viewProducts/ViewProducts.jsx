@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import {
   collection,
@@ -18,10 +19,13 @@ import Notiflix from 'notiflix';
 import { db, storage } from '../../../firebase/config';
 import styles from './ViewProducts.module.scss';
 import Spinner from '../../spinner/Spinner';
+import { STORE_PRODUCTS } from '../../../redux/slices/productSlice';
 
 const ViewProducts = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getProducs();
@@ -42,6 +46,12 @@ const ViewProducts = () => {
 
         setProducts(allProducts);
         setIsLoading(false);
+
+        dispatch(
+          STORE_PRODUCTS({
+            products: allProducts,
+          })
+        );
       });
     } catch (error) {
       setIsLoading(false);
@@ -117,7 +127,7 @@ const ViewProducts = () => {
                     <td>{category}</td>
                     <td>${price}</td>
                     <td className={styles.icons}>
-                      <Link to='/admin/add-product'>
+                      <Link to={`/admin/add-product/${id}`}>
                         <FaEdit size={18} color='green' />
                       </Link>
                       &nbsp;
