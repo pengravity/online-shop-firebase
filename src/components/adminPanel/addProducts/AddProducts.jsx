@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
 
 import Spinner from '../../spinner/Spinner';
 import { storage, db } from '../../../firebase/config';
 import Card from '../../card/Card';
 import styles from './AddProducts.module.scss';
 import { toast } from 'react-toastify';
+import { selectProducts } from '../../../redux/slices/productSlice';
 
 const categories = [
   { id: 1, name: 'Laptop' },
@@ -25,8 +27,25 @@ const initialState = {
 };
 
 const AddProducts = () => {
-  const [product, setProduct] = useState({
-    ...initialState,
+  const { id } = useParams();
+
+  const products = useSelector(selectProducts);
+  console.log(products, 'products');
+
+  const productEdit = products.find((item) => item.id === id);
+  console.log(productEdit, 'productEdit');
+
+  const detectForm = (id, option1, option2) => {
+    if (id === 'ADD') {
+      return option1;
+    } else {
+      return option2;
+    }
+  };
+
+  const [product, setProduct] = useState(() => {
+    const newState = detectForm(id, { ...initialState }, productEdit);
+    return newState;
   });
 
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -90,13 +109,25 @@ const AddProducts = () => {
     }
   };
 
+  const editProduct = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    try {
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+    }
+  };
+
   return (
     <>
       {isLoading && <Spinner />}
       <div className={styles.product}>
-        <h1>Add Products</h1>
+        <h2>{detectForm(id, 'Add New Product', 'Edit Product')}</h2>
         <Card cardClass={styles.card}>
-          <form onSubmit={addProduct}>
+          <form onSubmit={detectForm(id, addProduct, editProduct)}>
             <label>Product name:</label>
             <input
               type='text'
@@ -187,7 +218,10 @@ const AddProducts = () => {
               cols='10'
               rows='10'
             ></textarea>
-            <button className='--btn --btn-primary'>Save</button>
+            <button className='--btn --btn-primary'>
+              {' '}
+              {detectForm(id, 'Save Product', 'Edit Product')}
+            </button>
           </form>
         </Card>
       </div>

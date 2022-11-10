@@ -28,10 +28,10 @@ const ViewProducts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProducs();
+    getProducts();
   }, []);
 
-  const getProducs = () => {
+  const getProducts = () => {
     setIsLoading(true);
 
     try {
@@ -46,6 +46,7 @@ const ViewProducts = () => {
 
         setProducts(allProducts);
         setIsLoading(false);
+        console.log(allProducts);
 
         dispatch(
           STORE_PRODUCTS({
@@ -127,7 +128,7 @@ const ViewProducts = () => {
                     <td>{category}</td>
                     <td>${price}</td>
                     <td className={styles.icons}>
-                      <Link to={`/admin/add-product/${id}`}>
+                      <Link to={`/admin/add-products/${id}`}>
                         <FaEdit size={18} color='green' />
                       </Link>
                       &nbsp;
