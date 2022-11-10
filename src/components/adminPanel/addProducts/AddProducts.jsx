@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
+import { collection, addDoc, Timestamp, doc, setDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 
 import Spinner from '../../spinner/Spinner';
@@ -30,10 +35,8 @@ const AddProducts = () => {
   const { id } = useParams();
 
   const products = useSelector(selectProducts);
-  console.log(products, 'products');
 
   const productEdit = products.find((item) => item.id === id);
-  console.log(productEdit, 'productEdit');
 
   const detectForm = (id, option1, option2) => {
     if (id === 'ADD') {
@@ -109,12 +112,31 @@ const AddProducts = () => {
     }
   };
 
-  const editProduct = (e) => {
+  const editProduct = async (e) => {
     e.preventDefault();
 
     setIsLoading(true);
 
+    if (product.imageURL !== productEdit.imageURL) {
+      const storageRef = ref(storage, productEdit.imageURL);
+      await deleteObject(storageRef);
+    }
+
     try {
+      await setDoc(doc(db, 'products', id), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: Number(product.price),
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt: productEdit.createdAt,
+        editedAt: Timestamp.now().toDate().toString(),
+      });
+
+      setIsLoading(false);
+      toast.success('product edited');
+      navigate('/admin/all-products');
     } catch (error) {
       setIsLoading(false);
       toast.error(error.message);
