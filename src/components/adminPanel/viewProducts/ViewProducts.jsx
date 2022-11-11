@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import {
   collection,
@@ -19,46 +19,26 @@ import Notiflix from 'notiflix';
 import { db, storage } from '../../../firebase/config';
 import styles from './ViewProducts.module.scss';
 import Spinner from '../../spinner/Spinner';
-import { STORE_PRODUCTS } from '../../../redux/slices/productSlice';
+import {
+  selectProducts,
+  STORE_PRODUCTS,
+} from '../../../redux/slices/productSlice';
+import useFetchCollection from '../../../customHooks/useFetchCollection';
 
 const ViewProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, isLoading } = useFetchCollection('products');
+
+  const products = useSelector(selectProducts);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = () => {
-    setIsLoading(true);
-
-    try {
-      const productsRef = collection(db, 'products');
-      const q = query(productsRef, orderBy('createdAt', 'desc'));
-
-      onSnapshot(q, (snapshot) => {
-        const allProducts = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        setProducts(allProducts);
-        setIsLoading(false);
-        console.log(allProducts);
-
-        dispatch(
-          STORE_PRODUCTS({
-            products: allProducts,
-          })
-        );
-      });
-    } catch (error) {
-      setIsLoading(false);
-      toast.error(error.message);
-    }
-  };
+    dispatch(
+      STORE_PRODUCTS({
+        products: data,
+      })
+    );
+  }, [dispatch, data]);
 
   const deleteConfirmation = (id, imageURL) => {
     Notiflix.Confirm.show(
