@@ -23,7 +23,6 @@ const useFetchCollection = (collectionName) => {
 
         setData(allData);
         setIsLoading(false);
-        console.log(allData);
       });
     } catch (error) {
       setIsLoading(false);
