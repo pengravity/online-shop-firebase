@@ -8,6 +8,7 @@ import './App.css';
 import { Home, Contact, Register, Login, Reset, Admin } from './pages';
 import { Header, Footer } from './components';
 import AdminOnly from './components/adminPanel/AdminOnly';
+import ProductDetails from './components/product/productDetails/ProductDetails';
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
               </AdminOnly>
             }
           />
+
+          <Route path='/product-details/:id' element={<ProductDetails />} />
         </Routes>
         <Footer />
         <ToastContainer />

@@ -9,6 +9,7 @@ import {
   selectProducts,
   STORE_PRODUCTS,
 } from '../../redux/slices/productSlice';
+import Spinner from '../spinner/Spinner';
 
 function Product() {
   const { data, isLoading } = useFetchCollection('products');
@@ -29,10 +30,10 @@ function Product() {
     <section>
       <div className={`container ${styles.product}`}>
         <aside className={styles.filter}>
-          <ProductFilter />
+          {isLoading ? null : <ProductFilter />}
         </aside>
         <div className={styles.content}>
-          <ProductList products={products} />
+          {isLoading ? <Spinner /> : <ProductList products={products} />}
         </div>
       </div>
     </section>

@@ -7,13 +7,15 @@
   .img {
     padding: 1rem;
     width: 240px;
+
     // height: 300px;
-    max-height: 75%;
+    max-height: 70%;
     overflow: hidden;
     border-bottom: 2px solid #eee;
+    object-fit: contain;
     img {
       width: 100%;
-      max-width: 100%;
+      max-width: 90%;
       // height: 100%;
       // max-height: 100%;
       cursor: pointer;
