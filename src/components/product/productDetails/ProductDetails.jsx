@@ -28,8 +28,21 @@ const ProductDetails = () => {
     }
   };
 
+  const url = window.location.href;
+
+  const scrollToProducts = () => {
+    if (url.includes('details')) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      return;
+    }
+  };
+
   useEffect(() => {
     getProduct();
+    scrollToProducts();
   }, []);
 
   return (
@@ -37,7 +50,7 @@ const ProductDetails = () => {
       <div className={`container ${styles.product}`}>
         <h2>Product Details</h2>
         <div>
-          <Link to='/'>&larr; Back to products</Link>
+          <Link to='/#products'>&larr; Back to products</Link>
         </div>
         {product === null ? (
           <Spinner />

@@ -9,7 +9,7 @@ const Slider = () => {
 
   const autoScroll = true;
   let slideInterval;
-  let intervalTime = 5000;
+  let intervalTime = 6000;
 
   useEffect(() => {
     setCurrentSlide(0);
