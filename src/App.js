@@ -33,8 +33,9 @@ function App() {
 
           <Route path='/product-details/:id' element={<ProductDetails />} />
         </Routes>
-        <Footer />
+
         <ToastContainer />
+        <Footer />
       </BrowserRouter>
     </>
   );
