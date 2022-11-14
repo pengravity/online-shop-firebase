@@ -20,10 +20,40 @@ const filterSlice = createSlice({
       );
       state.filteredProducts = tempProducts;
     },
+    SORT_PRODUCTS(state, action) {
+      const { products, sort } = action.payload;
+      let tempProducts = [];
+
+      switch (sort) {
+        case 'newest': {
+          tempProducts = products;
+          break;
+        }
+
+        case 'price-low-high': {
+          tempProducts = [...products].sort((a, b) => {
+            return a.price - b.price;
+          });
+          break;
+        }
+
+        case 'price-high-low': {
+          tempProducts = [...products].sort((a, b) => {
+            return b.price - a.price;
+          });
+          break;
+        }
+
+        default: {
+          return state;
+        }
+      }
+      state.filteredProducts = tempProducts;
+    },
   },
 });
 
-export const { FILTER_BY_SEARCH } = filterSlice.actions;
+export const { FILTER_BY_SEARCH, SORT_PRODUCTS } = filterSlice.actions;
 
 export const selectFilteredProducts = (state) => state.filter.filteredProducts;
 

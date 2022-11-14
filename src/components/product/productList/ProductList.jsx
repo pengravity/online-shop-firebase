@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   FILTER_BY_SEARCH,
   selectFilteredProducts,
+  SORT_PRODUCTS,
 } from '../../../redux/slices/filterSlice';
 import Search from '../../search/Search';
 import ProductItem from '../productItem/ProductItem';
@@ -14,13 +15,18 @@ import styles from './ProductList.module.scss';
 const ProductList = ({ products }) => {
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('newest');
   const filteredProducts = useSelector(selectFilteredProducts);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(SORT_PRODUCTS({ products, sort }));
+  }, [products, sort, dispatch]);
+
+  useEffect(() => {
     dispatch(FILTER_BY_SEARCH({ products, search }));
-  }, [products, search]);
+  }, [products, search, dispatch]);
 
   return (
     <div className={styles['product-list']} id='product'>
@@ -45,7 +51,7 @@ const ProductList = ({ products }) => {
         {/* Sort Products */}
         <div className={styles.sort}>
           <label>Sort by: </label>
-          <select>
+          <select value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value='newest'>Newest</option>
             <option value='price-low-high'>Price: low to high</option>
             <option value='price-high-low'>Price: high to low</option>
@@ -58,6 +64,8 @@ const ProductList = ({ products }) => {
           <p>No products found...</p>
         ) : (
           <>
+            {/* {products.map((product) => { */}
+
             {filteredProducts.map((product) => {
               return (
                 <div key={product.id}>
