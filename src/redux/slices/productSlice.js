@@ -18,7 +18,7 @@ const productSlice = createSlice({
       const pricesArr = [];
       products.map((product) => {
         const price = product.price;
-        pricesArr.push(price);
+        return pricesArr.push(price);
       });
       const max = Math.max(...pricesArr);
       const min = Math.min(...pricesArr);
