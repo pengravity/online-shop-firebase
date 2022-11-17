@@ -65,7 +65,6 @@ const filterSlice = createSlice({
       state.filteredProducts = tempProducts;
     },
     FILTER_BY_PRICE(state, action) {
-      console.log(action.payload);
       const { products, filterPrice } = action.payload;
       let tempProducts = [];
       tempProducts = products.filter((product) => product.price < filterPrice);

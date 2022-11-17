@@ -15,7 +15,8 @@ import styles from './ProductFilter.module.scss';
 
 const ProductFilter = () => {
   const [category, setCategory] = useState('All');
-  const [filterPrice, setFilterPrice] = useState(0);
+  const [filterPrice, setFilterPrice] = useState(3000);
+
   const products = useSelector(selectProducts);
   const minPrice = useSelector(selectMinPrice);
   const maxPrice = useSelector(selectMaxPrice);
@@ -35,6 +36,11 @@ const ProductFilter = () => {
   useEffect(() => {
     dispatch(FILTER_BY_PRICE({ products, filterPrice }));
   }, [dispatch, products, filterPrice]);
+
+  const clearFilters = () => {
+    setCategory('All');
+    setFilterPrice(maxPrice);
+  };
 
   return (
     <div className={styles.filter}>
@@ -65,7 +71,9 @@ const ProductFilter = () => {
         />
       </div>
       <br />
-      <button className='--btn  --btn-danger'>Clear Filter</button>
+      <button className='--btn  --btn-danger' onClick={clearFilters}>
+        Clear Filter
+      </button>
     </div>
   );
 };
