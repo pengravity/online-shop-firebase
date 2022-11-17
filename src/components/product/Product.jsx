@@ -8,6 +8,9 @@ import useFetchCollection from '../../customHooks/useFetchCollection';
 import {
   selectProducts,
   STORE_PRODUCTS,
+  GET_PRICE_RANGE,
+  selectMinPrice,
+  selectMaxPrice,
 } from '../../redux/slices/productSlice';
 import Spinner from '../spinner/Spinner';
 
@@ -15,6 +18,8 @@ function Product() {
   const { data, isLoading } = useFetchCollection('products');
 
   const products = useSelector(selectProducts);
+  // const minPrice = useSelector(selectMinPrice);
+  // const maxPrice = useSelector(selectMaxPrice);
 
   const dispatch = useDispatch();
 
@@ -22,6 +27,14 @@ function Product() {
     dispatch(
       STORE_PRODUCTS({
         products: data,
+      })
+    );
+
+    dispatch(
+      GET_PRICE_RANGE({
+        products: data,
+        // minPrice: '',
+        // maxPrice: '',
       })
     );
   }, [dispatch, data]);
