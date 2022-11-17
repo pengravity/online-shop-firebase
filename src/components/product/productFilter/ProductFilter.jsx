@@ -33,14 +33,14 @@ const ProductFilter = () => {
     dispatch(FILTER_BY_CATEGORY({ products, category: categ }));
   };
 
-  useEffect(() => {
-    dispatch(FILTER_BY_PRICE({ products, filterPrice }));
-  }, [dispatch, products, filterPrice]);
-
   const clearFilters = () => {
     setCategory('All');
     setFilterPrice(maxPrice);
   };
+
+  useEffect(() => {
+    dispatch(FILTER_BY_PRICE({ products, filterPrice }));
+  }, [dispatch, products, filterPrice]);
 
   return (
     <div className={styles.filter}>

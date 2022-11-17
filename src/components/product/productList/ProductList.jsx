@@ -8,6 +8,7 @@ import {
   selectFilteredProducts,
   SORT_PRODUCTS,
 } from '../../../redux/slices/filterSlice';
+import Pagination from '../../pagination/Pagination';
 import Search from '../../search/Search';
 import ProductItem from '../productItem/ProductItem';
 import styles from './ProductList.module.scss';
@@ -17,6 +18,16 @@ const ProductList = ({ products }) => {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('newest');
   const filteredProducts = useSelector(selectFilteredProducts);
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(6);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const dispatch = useDispatch();
 
@@ -44,11 +55,11 @@ const ProductList = ({ products }) => {
               : `${filteredProducts.length} product found`}
           </p>
         </div>
-        {/* Search Icon */}
+
         <div>
           <Search value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
-        {/* Sort Products */}
+
         <div className={styles.sort}>
           <label>Sort by: </label>
           <select value={sort} onChange={(e) => setSort(e.target.value)}>
@@ -64,9 +75,8 @@ const ProductList = ({ products }) => {
           <p>No products found...</p>
         ) : (
           <>
-            {/* {products.map((product) => { */}
-
-            {filteredProducts.map((product) => {
+            {/* {filteredProducts.map((product) => { */}
+            {currentProducts.map((product) => {
               return (
                 <div key={product.id}>
                   <ProductItem {...product} grid={grid} product={product} />
@@ -76,6 +86,12 @@ const ProductList = ({ products }) => {
           </>
         )}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        productsPerPage={productsPerPage}
+        totalProducts={filteredProducts.length}
+      />
     </div>
   );
 };
