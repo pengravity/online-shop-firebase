@@ -31,10 +31,25 @@ const cartSlice = createSlice({
       // save cart to local storage
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
+    DECREASE_CART_ITEM(state, action) {
+      const productIndex = state.cartItems.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (state.cartItems[productIndex].cartQuantity > 1) {
+        state.cartItems[productIndex].cartQuantity -= 1;
+      } else if (state.cartItems[productIndex].cartQuantity === 1) {
+        const newCartItems = state.cartItems.filter(
+          (element) => element.id !== action.payload.id
+        );
+        state.cartItems = newCartItems;
+      }
+      // save cart to local storage
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+    },
   },
 });
 
-export const { ADD_TO_CART } = cartSlice.actions;
+export const { ADD_TO_CART, DECREASE_CART_ITEM } = cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart.cartItems;
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity;

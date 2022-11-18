@@ -18,7 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     scrollToProducts();
-  }, []);
+  });
 
   return (
     <div>

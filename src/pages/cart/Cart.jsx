@@ -1,7 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import {
+  ADD_TO_CART,
+  DECREASE_CART_ITEM,
   selectCartItems,
   selectCartTotalQuantity,
   selectCartTotalToPay,
@@ -13,6 +15,16 @@ const Cart = () => {
   const cartItems = useSelector(selectCartItems);
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
   const cartTotalToPay = useSelector(selectCartTotalToPay);
+
+  const dispatch = useDispatch();
+
+  const increaseCount = (item) => {
+    dispatch(ADD_TO_CART(item));
+  };
+
+  const decreaseCount = (item) => {
+    dispatch(DECREASE_CART_ITEM(item));
+  };
 
   return (
     <section>
@@ -49,9 +61,19 @@ const Cart = () => {
                       </td>
                       <td>
                         <div className={styles.count}>
-                          <button className='--btn'>-</button>
+                          <button
+                            className='--btn'
+                            onClick={() => decreaseCount(item)}
+                          >
+                            -
+                          </button>
                           <p> {cartQuantity}</p>
-                          <button className='--btn'>+</button>
+                          <button
+                            className='--btn'
+                            onClick={() => increaseCount(item)}
+                          >
+                            +
+                          </button>
                         </div>
                       </td>
                       <td>{price}</td>
