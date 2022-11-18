@@ -34,7 +34,7 @@ function App() {
           <Route path='/product-details/:id' element={<ProductDetails />} />
         </Routes>
 
-        <ToastContainer />
+        <ToastContainer bodyClassName='toastBody' />
         <Footer />
       </BrowserRouter>
     </>
