@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
 
-import { Home, Contact, Register, Login, Reset, Admin } from './pages';
+import { Home, Contact, Register, Login, Reset, Admin, Cart } from './pages';
 import { Header, Footer } from './components';
 import AdminOnly from './components/adminPanel/AdminOnly';
 import ProductDetails from './components/product/productDetails/ProductDetails';
@@ -21,6 +21,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/reset' element={<Reset />} />
+          <Route path='/cart' element={<Cart />} />
 
           <Route
             path='/admin/*'
