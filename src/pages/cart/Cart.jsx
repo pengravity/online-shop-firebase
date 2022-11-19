@@ -4,6 +4,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import {
   ADD_TO_CART,
   DECREASE_CART_ITEM,
+  REMOVE_FROM_CART,
   selectCartItems,
   selectCartTotalQuantity,
   selectCartTotalToPay,
@@ -24,6 +25,10 @@ const Cart = () => {
 
   const decreaseCount = (item) => {
     dispatch(DECREASE_CART_ITEM(item));
+  };
+
+  const removeFromCart = (item) => {
+    dispatch(REMOVE_FROM_CART(item));
   };
 
   return (
@@ -79,7 +84,10 @@ const Cart = () => {
                       <td>{price}</td>
                       <td>{(cartQuantity * price).toFixed(2)}</td>
                       <td className={styles.icons}>
-                        <RiDeleteBin5Line size={20} />
+                        <RiDeleteBin5Line
+                          size={20}
+                          onClick={() => removeFromCart(item)}
+                        />
                       </td>
                     </tr>
                   );
