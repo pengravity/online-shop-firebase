@@ -54,10 +54,17 @@ const cartSlice = createSlice({
       // save cart to local storage
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
+    CLEAR_CART(state, action) {
+      state.cartItems = [];
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      toast.info(`cart items deleted`, {
+        position: 'top-left',
+      });
+    },
   },
 });
 
-export const { ADD_TO_CART, DECREASE_CART_ITEM, REMOVE_FROM_CART } =
+export const { ADD_TO_CART, DECREASE_CART_ITEM, REMOVE_FROM_CART, CLEAR_CART } =
   cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart.cartItems;
