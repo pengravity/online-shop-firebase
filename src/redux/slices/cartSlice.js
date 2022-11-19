@@ -61,11 +61,28 @@ const cartSlice = createSlice({
         position: 'top-left',
       });
     },
+    CALCULATE_TOTAL_TO_PAY(state, action) {
+      const arr = [];
+      state.cartItems.map((item) => {
+        const { price, cartQuantity } = item;
+        const payForItem = price * cartQuantity;
+        return arr.push(payForItem);
+      });
+      const total = arr.reduce((acc, current) => {
+        return acc + current;
+      }, 0);
+      state.cartTotalToPay = total;
+    },
   },
 });
 
-export const { ADD_TO_CART, DECREASE_CART_ITEM, REMOVE_FROM_CART, CLEAR_CART } =
-  cartSlice.actions;
+export const {
+  ADD_TO_CART,
+  DECREASE_CART_ITEM,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
+  CALCULATE_TOTAL_TO_PAY,
+} = cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart.cartItems;
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity;

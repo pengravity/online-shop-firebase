@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RiDeleteBin5Line } from 'react-icons/ri';
+
 import {
   ADD_TO_CART,
   DECREASE_CART_ITEM,
   REMOVE_FROM_CART,
   CLEAR_CART,
+  CALCULATE_TOTAL_TO_PAY,
   selectCartItems,
   selectCartTotalQuantity,
   selectCartTotalToPay,
@@ -35,6 +38,10 @@ const Cart = () => {
   const clearCart = () => {
     dispatch(CLEAR_CART());
   };
+
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL_TO_PAY());
+  }, [dispatch, cartItems]);
 
   return (
     <section>
