@@ -6,22 +6,36 @@ import { toast } from 'react-toastify';
 import styles from './ProductDetails.module.scss';
 import { db } from '../../../firebase/config';
 import Spinner from '../../spinner/Spinner';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  ADD_TO_CART,
+  DECREASE_CART_ITEM,
+  CALCULATE_ITEMS_QUANTITY,
+  selectCartItems,
+} from '../../../redux/slices/cartSlice';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+
+  const cartItems = useSelector(selectCartItems);
+  const dispatch = useDispatch();
+
+  const currentItem = cartItems.find((cartItem) => cartItem.id === id);
+
+  const isItemInCart = cartItems.findIndex((cartItem) => {
+    return cartItem.id === id;
+  });
 
   const getProduct = async () => {
     const docRef = doc(db, 'products', id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      // console.log('Document data:', docSnap.data());
       const obj = {
         id,
         ...docSnap.data(),
       };
-      // console.log(obj);
       setProduct(obj);
     } else {
       toast.error('Product not found ');
@@ -44,6 +58,15 @@ const ProductDetails = () => {
     getProduct();
     scrollToProducts();
   }, []);
+
+  const addToCart = (item) => {
+    dispatch(ADD_TO_CART(item));
+    dispatch(CALCULATE_ITEMS_QUANTITY());
+  };
+
+  const decreaseCartItem = (item) => {
+    dispatch(DECREASE_CART_ITEM(item));
+  };
 
   return (
     <section>
@@ -72,13 +95,32 @@ const ProductDetails = () => {
                   <b>Brand:</b> {product.brand}
                 </p>
                 <div className={styles.count}>
-                  <button className='--btn'>-</button>
-                  <p>
-                    <b>1</b>
-                  </p>
-                  <button className='--btn'>+</button>
+                  {/* show quantity and +- buttons if item is already in the cart  */}
+                  {isItemInCart >= 0 ? (
+                    <>
+                      {' '}
+                      <button
+                        className='--btn'
+                        onClick={() => decreaseCartItem(product)}
+                      >
+                        -
+                      </button>
+                      <p>{<b>{currentItem.cartQuantity}</b>}</p>
+                      <button
+                        className='--btn'
+                        onClick={() => addToCart(product)}
+                      >
+                        +
+                      </button>
+                    </>
+                  ) : null}
                 </div>
-                <button className='--btn --btn-danger'>Add To Cart</button>
+                <button
+                  className='--btn --btn-danger'
+                  onClick={() => addToCart(product)}
+                >
+                  Add To Cart
+                </button>
               </div>
             </div>
           </>
