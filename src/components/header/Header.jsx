@@ -134,11 +134,6 @@ const Header = () => {
                 Home
               </NavLink>
             </li>
-            <li>
-              <NavLink to='/contact' className={activeLink}>
-                Contact Us
-              </NavLink>
-            </li>
           </ul>
           <div className={styles['header-right']} onClick={hideMenu}>
             <span className={styles.links}>
