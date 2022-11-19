@@ -9,6 +9,7 @@ import {
   REMOVE_FROM_CART,
   CLEAR_CART,
   CALCULATE_TOTAL_TO_PAY,
+  CALCULATE_ITEMS_QUANTITY,
   selectCartItems,
   selectCartTotalQuantity,
   selectCartTotalToPay,
@@ -41,6 +42,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(CALCULATE_TOTAL_TO_PAY());
+    dispatch(CALCULATE_ITEMS_QUANTITY());
   }, [dispatch, cartItems]);
 
   return (
