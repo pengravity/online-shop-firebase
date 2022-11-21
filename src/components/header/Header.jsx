@@ -43,7 +43,6 @@ const Header = () => {
   const [displayName, setDisplayName] = useState('');
   const [scrollPage, setScrollPage] = useState(false);
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
-  console.log(cartTotalQuantity);
 
   const navigate = useNavigate();
 

@@ -2,13 +2,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-
-import { toast } from 'react-toastify';
-import { auth } from '../../firebase/config';
 import { GrGoogle } from 'react-icons/gr';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
+import { auth } from '../../firebase/config';
 import Card from '../../components/card/Card';
 import styles from './auth.module.scss';
 import Spinner from '../../components/spinner/Spinner';
+import { selectPreviousURL } from '../../redux/slices/cartSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,6 +18,15 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const previousURL = useSelector(selectPreviousURL);
+
+  const redirectUser = () => {
+    if (previousURL.includes('cart')) {
+      return navigate('/cart');
+    } else {
+      navigate('/');
+    }
+  };
 
   const loginUser = (e) => {
     e.preventDefault();
@@ -24,11 +35,9 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        // const user = userCredential.user;
         setIsLoading(false);
         toast.success('User logged in!');
-        navigate('/');
+        redirectUser();
       })
       .catch((error) => {
         toast.error(error.message);
@@ -40,9 +49,8 @@ const Login = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        // const user = result.user;
         toast.success('Sign-in successful');
-        navigate('/');
+        redirectUser();
       })
       .catch((error) => {
         toast.error(error.message);

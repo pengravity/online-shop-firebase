@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
 import {
@@ -13,9 +13,11 @@ import {
   selectCartItems,
   selectCartTotalQuantity,
   selectCartTotalToPay,
+  SAVE_URL,
 } from '../../redux/slices/cartSlice';
 import styles from './Cart.module.scss';
 import Card from '../../components/card/Card';
+import { selectIsLoggedIn } from '../../redux/slices/authSlice';
 
 const Cart = () => {
   const cartItems = useSelector(selectCartItems);
@@ -23,6 +25,8 @@ const Cart = () => {
   const cartTotalToPay = useSelector(selectCartTotalToPay);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const increaseCount = (item) => {
     dispatch(ADD_TO_CART(item));
@@ -43,7 +47,19 @@ const Cart = () => {
   useEffect(() => {
     dispatch(CALCULATE_TOTAL_TO_PAY());
     dispatch(CALCULATE_ITEMS_QUANTITY());
+    dispatch(SAVE_URL(''));
   }, [dispatch, cartItems]);
+
+  const url = window.location.href;
+
+  const checkout = () => {
+    if (isLoggedIn) {
+      navigate('/checkout-details');
+    } else {
+      dispatch(SAVE_URL(url));
+      navigate('/login');
+    }
+  };
 
   return (
     <section>
@@ -125,7 +141,10 @@ const Cart = () => {
                     <h4>{`Total for items: $${cartTotalToPay.toFixed(2)}`}</h4>
                   </div>
                   <p>Delivery from $10</p>
-                  <button className='--btn --btn-primary --btn-block'>
+                  <button
+                    className='--btn --btn-primary --btn-block'
+                    onClick={checkout}
+                  >
                     Checkout
                   </button>
                 </Card>
