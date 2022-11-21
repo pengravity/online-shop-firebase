@@ -2,7 +2,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/config';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-toastify';
 
@@ -21,6 +21,10 @@ import { FaTimes } from 'react-icons/fa';
 import styles from './Header.module.scss';
 import AdminOnly from '../adminPanel/AdminOnly';
 import { AdminOnlyLink } from '../adminPanel/AdminOnly';
+import {
+  CALCULATE_ITEMS_QUANTITY,
+  selectCartTotalQuantity,
+} from '../../redux/slices/cartSlice';
 
 const logo = (
   <div className={styles.logo}>
@@ -32,24 +36,31 @@ const logo = (
   </div>
 );
 
-const cart = (
-  <span className={styles.cart}>
-    <Link to='/cart'>
-      Cart
-      <ImCart size={22} />
-      <p>0</p>
-    </Link>
-  </span>
-);
-
 const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : '');
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setDisplayName] = useState('');
+  const [scrollPage, setScrollPage] = useState(false);
+  const cartTotalQuantity = useSelector(selectCartTotalQuantity);
+  console.log(cartTotalQuantity);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CALCULATE_ITEMS_QUANTITY());
+  }, []);
+
+  const fixNavbar = () => {
+    if (window.scrollY > 50) {
+      setScrollPage(true);
+    } else {
+      setScrollPage(false);
+    }
+  };
+  window.addEventListener('scroll', fixNavbar);
 
   //checking currently signed-in user
   useEffect(() => {
@@ -99,8 +110,18 @@ const Header = () => {
       });
   };
 
+  const cart = (
+    <span className={styles.cart}>
+      <Link to='/cart'>
+        Cart
+        <ImCart size={22} />
+        <p>{cartTotalQuantity}</p>
+      </Link>
+    </span>
+  );
+
   return (
-    <header>
+    <header className={scrollPage ? `${styles.fixed}` : null}>
       <div className={styles.header}>
         {logo}
         <nav

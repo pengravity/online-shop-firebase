@@ -3,8 +3,10 @@ import { useDispatch } from 'react-redux';
 
 import Card from '../../card/Card';
 import styles from './ProductItem.module.scss';
-import { ADD_TO_CART } from '../../../redux/slices/cartSlice';
-
+import {
+  ADD_TO_CART,
+  CALCULATE_ITEMS_QUANTITY,
+} from '../../../redux/slices/cartSlice';
 const ProductItem = ({ product, grid, id, name, price, desc, imageURL }) => {
   const shortenText = (text, numOfLetters) => {
     if (text.length > numOfLetters) {
@@ -18,6 +20,7 @@ const ProductItem = ({ product, grid, id, name, price, desc, imageURL }) => {
 
   const addToCart = () => {
     dispatch(ADD_TO_CART(product));
+    dispatch(CALCULATE_ITEMS_QUANTITY());
   };
 
   return (

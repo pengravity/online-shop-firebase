@@ -66,6 +66,7 @@ const ProductDetails = () => {
 
   const decreaseCartItem = (item) => {
     dispatch(DECREASE_CART_ITEM(item));
+    dispatch(CALCULATE_ITEMS_QUANTITY());
   };
 
   return (
